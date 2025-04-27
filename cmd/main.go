@@ -40,12 +40,22 @@ func main() {
 
 	r := gin.Default()
 	r.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"http://localhost:5173", "https://linkup.pages.dev", "https://5f83815c.linkup-9w5.pages.dev"},
+		AllowOrigins: []string{
+			"http://localhost:5173",
+			"https://linkup-9w5.pages.dev",
+			"https://*.linkup-9w5.pages.dev",
+		},
+		AllowOriginFunc: func(origin string) bool {
+			return origin == "https://linkup-9w5.pages.dev" ||
+				len(origin) > 0 &&
+					origin[len(origin)-19:] == ".linkup-9w5.pages.dev"
+		},
 		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
 		ExposeHeaders:    []string{"Content-Length"},
 		AllowCredentials: true,
 	}))
+
 	r.POST("/register", authHandler.Register)
 	r.POST("/login", authHandler.Login)
 	r.GET("/search", userHandler.SearchUsers)
