@@ -16,9 +16,8 @@ import (
 )
 
 func main() {
-	err := godotenv.Load(".env")
-	if err != nil {
-		log.Fatal("Error loading .env file")
+	if err := godotenv.Load(); err != nil {
+		log.Println("No .env file found, using system environment variables")
 	}
 	db, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
 	if err != nil {
