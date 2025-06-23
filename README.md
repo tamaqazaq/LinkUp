@@ -27,6 +27,8 @@ internal/
     handler/           # HTTP handlers
     postgres/          # DB repositories
   app/service/         # Business logic
+  model/               # Entities
+  usecase/             # Usecases
 pkg/
   middleware/          # JWT middleware
 .env                    # Environment variables
